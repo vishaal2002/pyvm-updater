@@ -1,10 +1,19 @@
 # Installation Guide - Python Version Manager
 
-## 🚀 Quick Install (Recommended)
+## 🚀 Quick Install (For New Users)
 
-### Step 1: Pre-Installation Check (Optional but Recommended)
+### Step 1: Get the Code from GitHub
+
 ```bash
-cd /home/shreyasmene06/coding/sideProjects
+# Clone the repository
+git clone https://github.com/shreyasmene06/pyvm-updater.git
+
+# Navigate to the project
+cd pyvm-updater
+```
+
+### Step 2: Pre-Installation Check (Optional but Recommended)
+```bash
 python3 check_requirements.py
 ```
 
@@ -16,27 +25,34 @@ This will verify:
 - ✓ Installation permissions
 - ✓ Existing dependencies
 
-### Step 2: Install the Tool
+### Step 3: Install the Tool
 
-**Option A: Development Install (Editable)**
+**Option A: User Install (Recommended - No sudo required)**
 ```bash
-pip install -e .
+pip install --user .
 ```
 
-**Option B: User Install (No sudo required)**
+**Option B: System-wide Install**
+```bash
+sudo pip install .
+```
+
+**Option C: Development Install (For contributors only)**
 ```bash
 pip install --user -e .
 ```
 
-**Option C: System-wide Install**
-```bash
-sudo pip install -e .
-```
+**⚠️ Note for Anaconda Users:** If you get a "File exists" error with option C, use option A instead.
 
-### Step 3: Verify Installation
+### Step 4: Verify Installation
 ```bash
 pyvm --version
 pyvm check
+```
+
+If you see "command not found", add `~/.local/bin` to your PATH:
+```bash
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ---
@@ -74,7 +90,71 @@ install.bat
 
 ---
 
-## 🖥️ Platform-Specific Notes
+## � Special Instructions for Anaconda/Miniconda Users
+
+If you're using Anaconda or Miniconda, follow these special instructions:
+
+### Installation
+```bash
+# Use regular install (NOT editable mode)
+pip install --user .
+```
+
+**Do NOT use:**
+```bash
+pip install --user -e .  # ❌ This may cause "File exists" errors with Anaconda
+```
+
+### After Installation
+
+The `pyvm` tool will work, but keep in mind:
+- ✅ `pyvm check` - Will show your Anaconda Python version
+- ✅ `pyvm update` - Will install the latest Python to your system
+- ⚠️ Your Anaconda Python version won't change (this is expected!)
+
+### Understanding the Results
+
+```bash
+# Your Anaconda Python (unchanged)
+python --version
+# Output: Python 3.13.5 (or whatever Anaconda version you have)
+
+# The newly installed system Python
+python3.14 --version
+# Output: Python 3.14.0
+```
+
+### How to Use the Updated Python
+
+**Option 1: Use it directly**
+```bash
+python3.14 your_script.py
+```
+
+**Option 2: Create a virtual environment**
+```bash
+python3.14 -m venv myproject
+source myproject/bin/activate
+python --version  # Now shows 3.14.0
+```
+
+**Option 3: Continue using Anaconda (Recommended for data science)**
+```bash
+# Your Anaconda environment works normally
+conda activate myenv
+python your_script.py
+```
+
+### Why This Happens
+
+Anaconda maintains its own Python installation separate from system Python. When you update Python with `pyvm`, it updates the system Python, not your Anaconda installation. This is actually beneficial because:
+- ✅ Prevents conflicts between Anaconda and system packages
+- ✅ Keeps your Anaconda environment stable
+- ✅ Gives you both options available
+
+---
+
+## �🖥️ Platform-Specific Notes
 
 ### Windows
 - No additional requirements
