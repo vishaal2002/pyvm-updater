@@ -235,7 +235,7 @@ def update_python_windows(version_str: str) -> bool:
             minor_int = int(minor)
             if major_int < 3 or (major_int == 3 and minor_int < 11):
                 print("ARM64 installers are only available for Python 3.11+")
-                print("Falling back to AMD64 installer for Python {version_str}")
+                print(f"Falling back to AMD64 installer for Python {version_str}")
                 arch = 'amd64'
             else:
                 arch = 'arm64'
